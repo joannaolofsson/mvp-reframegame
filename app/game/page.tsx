@@ -39,7 +39,6 @@ export default function MvpGame() {
 
     return (
         <div className={styles.gameContainer}>
-            <h3 className={styles.instruction}>Instructions: Choose your stressfilter and generate your selection of cards</h3>
             <div className={styles.selectWrapper}>
                 <Label text='Stress filter' />
                 <select value={stress} onChange={e => setStress(e.target.value as 'low' | 'high')}>

@@ -24,7 +24,7 @@ export default function Card({
       onClick={onClick}
       aria-disabled={disabled}
     >
-      <h3>{title}</h3>
+      <h4>{title}</h4>
       <p>{description}</p>
       {children && <div className={styles.cardContent}>{children}</div>}
     </div>

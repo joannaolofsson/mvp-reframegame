@@ -44,9 +44,27 @@ h2 {
   color: var(--color-primary);
 }
 
+h3 {
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-secondary);
+}
+
+h4 {
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-secondary);
+}
+
 p {
   font-size: 1rem;
   font-weight: 400;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-secondary);
 }
 
 button {
