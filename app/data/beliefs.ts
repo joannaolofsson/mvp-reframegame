@@ -1,4 +1,4 @@
-export const beliefs =  [
+export const beliefs = [
   {
     id: 'belief-1',
     title: 'I am not good enough',
