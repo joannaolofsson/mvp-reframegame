@@ -1,6 +1,4 @@
-import { Situation } from "../types/game"
-
-export const situations: Situation[] = [
+export const situations = [
   {
     id: 'situation-1',
     title: 'Working under a tight deadline',

@@ -1,67 +1,105 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { cases } from '../data/cases';
 import { beliefs } from '../data/beliefs';
 import { situations } from '../data/situations';
-import { drawCase, drawBelief, drawSituation, calculateScore, getWorldChange } from '../lib/gameLogic';
+import { drawRandomCard, calculateScore, getWorldChange } from '../lib/gameLogic';
+import styles from './page.module.css';
+import Label from '../components/ui/Label';
+import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
+import WorldResult from '../components/WorldResult';
+import { DrawnCard } from '../types/game';
+import WorldMeter from '../components/WorldMeter';
 
 export default function MvpGame() {
-  const [caseCard, setCaseCard] = useState<any>(null)
-  const [beliefCard, setBeliefCard] = useState<any>(null)
-  const [situationCard, setSituationCard] = useState<any>(null)
-  const [stress, setStress] = useState<'low' | 'high'>('low')
-  const [worldChange, setWorldChange] = useState<{ change: string; amount: number } | null>(null)
+const [caseCard, setCaseCard] = useState<DrawnCard | null>(null);
+const [beliefCard, setBeliefCard] = useState<DrawnCard | null>(null);
+const [situationCard, setSituationCard] = useState<DrawnCard | null>(null);
+const [stress, setStress] = useState<'low' | 'high'>('low');
+const [worldChange, setWorldChange] = useState<{ change: string; amount: number } | null>(null);
 
   function handleDraw() {
-    const c = drawCase(cases)
-    const b = drawBelief(beliefs)
-    const s = drawSituation(situations)
+  const c = drawRandomCard(cases);
+  const b = drawRandomCard(beliefs);
+  const s = drawRandomCard(situations);
 
-    setCaseCard(c)
-    setBeliefCard(b)
-    setSituationCard(s)
+  setCaseCard(c);
+  setBeliefCard(b);
+  setSituationCard(s);
+}
 
-    const score = calculateScore([c, b, s], stress)
-    setWorldChange(getWorldChange(score))
+useEffect(() => {
+  if (caseCard && beliefCard && situationCard) {
+    const score = calculateScore([caseCard, beliefCard, situationCard], stress);
+    setWorldChange(getWorldChange(score));
   }
+}, [caseCard, beliefCard, situationCard, stress]);
+
 
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: 20 }}>
-      <h2>The Reframe Game — MVP</h2>
-
-      <div style={{ marginBottom: 10 }}>
-        <label>Stress level: </label>
-        <select value={stress} onChange={e => setStress(e.target.value as 'low' | 'high')}>
-          <option value="low">Low</option>
-          <option value="high">High</option>
-        </select>
-      </div>
-
-      <button onClick={handleDraw} style={{ padding: '8px 12px', cursor: 'pointer' }}>
-        Draw Cards
-      </button>
-
-      {caseCard && (
-        <div style={{ marginTop: 20 }}>
-          <h3>Case: {caseCard.title}</h3>
-          <p>Question: {caseCard.question.text}</p>
-
-          <h3>Belief: {beliefCard.title}</h3>
-          <p>Question: {beliefCard.question.text}</p>
-
-          <h3>Situation: {situationCard.title}</h3>
-          <p>Question: {situationCard.question.text}</p>
-
-          <h3>World Result:</h3>
-          {worldChange && (
-            <p>
-              {worldChange.change === 'neutral'
-                ? 'World stays the same.'
-                : `World ${worldChange.change}s by ${worldChange.amount}`}
-            </p>
-          )}
+    <div className={styles.gameContainer}>
+        <h3 className={styles.instruction}>Instructions: Choose your stressfilter and generate your selection of cards</h3>
+        <div className={styles.selectWrapper}>
+            <Label text='Stress filter'/>
+            <select value={stress} onChange={e => setStress(e.target.value as 'low' | 'high')}>
+            <option value="low">Low</option>
+            <option value="high">High</option>
+            </select>
         </div>
-      )}
+        <div className={styles.buttonWrapper}>
+            <Button onClick={handleDraw} variant="primary" size="md">
+                Draw Cards
+            </Button>
+        </div>
+
+        <h3 className={styles.drawnHeading}>Drawn Cards</h3>
+        <div className={styles.cardWrapper}>
+  <div className={styles.cardItem}>
+    {caseCard && (
+      <Card title='' description='' className={styles.cardReveal}>
+        <h3 className={styles.cardHeading}>Case: {caseCard.title}</h3>
+        <p>Question: {caseCard.question.text}</p>
+      </Card>
+    )}
+  </div>
+
+  <div className={styles.cardItem}>
+    {beliefCard && (
+      <Card title='' description='' className={styles.cardReveal}>
+        <h3 className={styles.cardHeading}>Belief: {beliefCard.title}</h3>
+        <p><span className={styles.subHeading}>Question:</span> {beliefCard.question.text}</p>
+      </Card>
+    )}
+  </div>
+
+  <div className={styles.cardItem}>
+    {situationCard && (
+      <Card title='' description='' className={styles.cardReveal}>
+        <h3 className={styles.cardHeading}>Situation: {situationCard.title}</h3>
+        <p>Question: {situationCard.question.text}</p>
+      </Card>
+    )}
+  </div>
+</div>
+
+
+          <h3 className={styles.worldHeading}>World Result:</h3>
+          
+          {worldChange && (
+  <>
+    <WorldResult
+      change={worldChange.change as 'expand' | 'shrink' | 'neutral'}
+      amount={worldChange.amount}
+    />
+    <WorldMeter
+      change={worldChange.change as 'expand' | 'shrink' | 'neutral'}
+      amount={worldChange.amount}
+    />
+    
+  </>
+)}
+
     </div>
   )
 }

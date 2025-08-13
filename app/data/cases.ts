@@ -1,6 +1,4 @@
-import { Case } from "../types/game"
-
-export const cases: Case[] = [
+export const cases = [
   {
     id: 'case-1',
     title: 'New job interview',

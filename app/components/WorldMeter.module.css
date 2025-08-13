@@ -1,0 +1,34 @@
+.meterWrapper {
+  margin-top: 1rem;
+}
+
+.meterTrack {
+  background-color: #eee;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.expand {
+  background-color: #4caf50; /* green */
+}
+
+.shrink {
+  background-color: #f44336; /* red */
+}
+
+.neutral {
+  background-color: #9e9e9e; /* grey */
+}
+
+.label {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #333;
+}

@@ -1,43 +1,25 @@
-import { Case, Belief, Situation, Question, StressLevel } from '../types/game';
+import { Question, StressLevel, CardData, DrawnCard } from '../types/game';
 
 export interface DrawnItem {
   title: string;
   question: Question;
 }
 
-function pickRandom<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+export function drawRandomCard(deck: CardData[]): DrawnCard {
+  const card = deck[Math.floor(Math.random() * deck.length)];
+  const question = card.questions[Math.floor(Math.random() * card.questions.length)];
+  return { id: card.id, title: card.title, question };
 }
 
-export function drawCase(cases: Case[]): DrawnItem {
-  const c = pickRandom(cases);
-  const q = pickRandom(c.questions);
-  return { title: c.title, question: q };
-}
-
-export function drawBelief(beliefs: Belief[]): DrawnItem {
-  const b = pickRandom(beliefs);
-  const q = pickRandom(b.questions);
-  return { title: b.title, question: q };
-}
-
-export function drawSituation(situations: Situation[]): DrawnItem {
-  const s = pickRandom(situations);
-  const q = pickRandom(s.questions);
-  return { title: s.title, question: q };
-}
-
-export function calculateScore(draws: DrawnItem[], stressLevel: StressLevel): number {
+export function calculateScore(draws: DrawnCard[], stress: StressLevel): number {
   let score = 0;
-
   draws.forEach(d => {
     score += d.question.expands ? 1 : -1;
   });
 
-  if (stressLevel === 'high') {
-    score = Math.round(score * 1.5);
+  if (stress === 'high') {
+    score -= 1; // or whatever your rule is
   }
-
   return score;
 }
 

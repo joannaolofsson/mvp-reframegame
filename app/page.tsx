@@ -8,8 +8,10 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
         <h1>The reframe game</h1>
-        <p>A game that plays with perspective</p>
+        <p>- Questions that expands the world</p>
+        <div className={styles.mvpGameWrapper}>
         <MvpGame />
+        </div>
         </div>
       </main>
     </div>

@@ -9,7 +9,6 @@
     transition: background 0.2s, ease;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Ej från shared */
-
 }
 
 .button:hover {
@@ -22,6 +21,13 @@
   font-size: 1rem;
   border: none;
   font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, ease;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /*

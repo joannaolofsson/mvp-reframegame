@@ -1,6 +1,4 @@
-import { Belief } from "../types/game"
-
-export const beliefs: Belief[] = [
+export const beliefs =  [
   {
     id: 'belief-1',
     title: 'I am not good enough',

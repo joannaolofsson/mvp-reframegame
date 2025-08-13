@@ -1,24 +1,18 @@
 export interface Question {
   text: string;
-  expands: boolean; // true = expands world, false = shrinks world
+  expands: boolean;
 }
 
-export interface Case {
+export interface CardData {
   id: string;
   title: string;
-  questions: Question[];
+  questions: Question[]; // original full card data has array
 }
 
-export interface Belief {
+export interface DrawnCard {
   id: string;
   title: string;
-  questions: Question[];
-}
-
-export interface Situation {
-  id: string;
-  title: string;
-  questions: Question[];
+  question: Question; // drawn card has single question
 }
 
 export type StressLevel = 'low' | 'high';
